@@ -5,26 +5,35 @@ const operatorButtons = document.querySelectorAll('.operator');
 const clear = document.querySelector('#clear');
 const allClear = document.querySelector('#all-clear');
 const equal = document.querySelector("#equal");
+const squareRoot = document.querySelector('#sqrt');
 
-const add = (num1, num2) => parseFloat(num1 + num2);
+const add = (num1, num2) => num1 + num2;
 const subtract = (num1, num2) => num1 - num2;
 const multiply = (num1, num2) => num1 * num2;
 const division = (num1, num2) => num1 / num2;
+const power = (num1,num2) => num1 ** num2; 
+const sqRoot =(num1) => Math.sqrt(num1);
 
 
 // this function operates with 2 operands 
 function operate(operator, operand1, operand2){
+    let number1 =  Number(operand1);
+    let number2 = Number(operand2);
+
     if (operator === '+') {
-        return add(operand1,operand2);
+        return add(number1,number2);
     }
     else if (operator === '-') {
-        return subtract(operand1,operand2 );
+        return subtract(number1,number2 );
     } 
     else if (operator === '*') {
-        return multiply(operand1,operand2);
+        return multiply(number1,number2);
     }
     else if(operator ==='/'){
-        return division(operand1,operand2)
+        return division(number1,number2);
+    }
+    else if(operator ==='^'){
+        return power(number1,number2);
     }
 }
 let result;
@@ -78,8 +87,20 @@ equal.addEventListener("click",(e) =>{
     currentOperator ="";
     equalClicked =true;
    } 
-
 });
 
+allClear.addEventListener("click", (e) =>{
+    prevNumber ="";
+    nextNumber = "";
+    currentOperator ="";
+    equalClicked = false;
+    display.innerText = "";
+});
 
-
+squareRoot.addEventListener("click",(e) =>{
+    if(prevNumber !==""){
+        result = sqRoot(prevNumber);
+        prevNumber = result;
+        display.innerText = result;
+    }
+});
