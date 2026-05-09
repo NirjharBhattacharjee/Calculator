@@ -110,13 +110,13 @@ allClear.addEventListener("click", (e) =>{
 });
 
 squareRoot.addEventListener("click",(e) =>{
-    if(prevNumber !==""){
+    if(activeSide ==="left" && prevNumber !==""){
         result = sqRoot(prevNumber);
         prevNumber = String(result);
-        nextNumber = "";
-        currentOperator = "";
-        activeSide = "left";
-        equalClicked = true;
+        display.innerText = result;
+    }else if (activeSide === "right" && nextNumber !=="") {
+        result = sqRoot(nextNumber);
+        nextNumber = String(result);
         display.innerText = result;
     }
 });
