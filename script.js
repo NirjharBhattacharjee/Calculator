@@ -36,7 +36,7 @@ function operate(operator, operand1, operand2){
         return power(number1,number2);
     }
 }
-let result;
+let result="";
 let prevNumber="";
 let nextNumber ="";
 let currentOperator ="";
@@ -82,7 +82,9 @@ equal.addEventListener("click",(e) =>{
    if(prevNumber !== "" && currentOperator !== "" && nextNumber !== ""){
     result = operate(currentOperator,prevNumber,nextNumber);
     display.innerText = result;
-    prevNumber = result;
+    prevNumber = String(result);
+    console.log(`result is ${typeof(prevNumber)}`);
+    console.log(prevNumber);
     nextNumber ="";
     currentOperator ="";
     equalClicked =true;
@@ -102,5 +104,17 @@ squareRoot.addEventListener("click",(e) =>{
         result = sqRoot(prevNumber);
         prevNumber = result;
         display.innerText = result;
+    }
+});
+clear.addEventListener("click",(e) =>{
+    console.log("clicked")
+    if(currentOperator ==="" ){
+        console.log(typeof(prevNumber));
+        prevNumber = prevNumber.slice(0,-1);
+        display.innerText = prevNumber;
+    }else if (currentOperator !=="") {
+        console.log(nextNumber);
+        nextNumber = nextNumber.slice(0,-1);
+        display.innerText = nextNumber;
     }
 });
