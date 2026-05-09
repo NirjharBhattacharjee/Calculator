@@ -49,11 +49,11 @@ numberButtons.forEach(button => {
         
         if (equalClicked === true){
         prevNumber = number;
-        display.innerText = prevNumber;
         nextNumber ="";
         currentOperator ="";
         equalClicked = false;
         activeSide = "left";
+        display.innerText = prevNumber;
         return;
     } 
     
@@ -89,14 +89,15 @@ operatorButtons.forEach( operatorBtn =>{
 equal.addEventListener("click",(e) =>{
    if(prevNumber !== "" && currentOperator !== "" && nextNumber !== ""){
     result = operate(currentOperator,prevNumber,nextNumber);
-    display.innerText = result;
     prevNumber = String(result);
+    display.innerText = prevNumber;
     console.log(`result is ${typeof(prevNumber)}`);
     console.log(prevNumber);
     nextNumber ="";
     currentOperator ="";
     equalClicked =true;
     activeSide = "left"
+    console.log(`after eqalto prev number =${prevNumber}`)
    } 
 });
 
@@ -137,13 +138,26 @@ clear.addEventListener("click",(e) =>{
 decimal.addEventListener("click",(e)=>{
     const decimalExistPrev = prevNumber.includes(".");
     const decimalExistNext = nextNumber.includes(".");
-    if(decimalExistPrev === false && activeSide ==="left"){
-        console.log("clicked")
-        prevNumber = prevNumber + ".";
-        console.log(prevNumber);
-        display.innerText = prevNumber;
-    }else if(decimalExistNext === false && activeSide ==="right"){
-        nextNumber = nextNumber +".";
-        display.innerText = nextNumber;
+    
+    if(equalClicked === true){
+        equalClicked = false;
     }
+    if(activeSide ==="left"){
+       
+        if(decimalExistPrev === false){
+            console.log("clicked")
+            prevNumber = prevNumber + ".";
+            console.log(prevNumber);
+            display.innerText = prevNumber;
+        }
+        }
+    
+        else if(activeSide ==="right"){
+         
+            if (decimalExistNext === false) {
+                nextNumber = nextNumber +".";
+                display.innerText = nextNumber;
+            }
+        }     
+    
 });
