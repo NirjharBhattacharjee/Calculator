@@ -102,7 +102,7 @@ allClear.addEventListener("click", (e) =>{
 squareRoot.addEventListener("click",(e) =>{
     if(prevNumber !==""){
         result = sqRoot(prevNumber);
-        prevNumber = result;
+        prevNumber = String(result);
         display.innerText = result;
     }
 });
@@ -115,6 +115,22 @@ clear.addEventListener("click",(e) =>{
     }else if (currentOperator !=="") {
         console.log(nextNumber);
         nextNumber = nextNumber.slice(0,-1);
+        display.innerText = nextNumber;
+    }
+});
+
+const decimalExistPrev = prevNumber.includes(".");
+const decimalExistNext = nextNumber.includes(".");
+
+decimal.addEventListener("click",(e)=>{
+    
+    if(decimalExistPrev === false && currentOperator ===""){
+        console.log("clicked")
+        prevNumber = prevNumber + ".";
+        console.log(prevNumber);
+        display.innerText = prevNumber;
+    }else if(decimalExistNext === false && currentOperator !==""){
+        nextNumber = nextNumber +".";
         display.innerText = nextNumber;
     }
 });
