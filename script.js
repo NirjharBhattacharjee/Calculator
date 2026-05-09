@@ -41,6 +41,7 @@ let prevNumber="";
 let nextNumber ="";
 let currentOperator ="";
 let equalClicked= false;
+let activeSide = "left";
 
 numberButtons.forEach(button => {
     button.addEventListener("click", (e)=>{
@@ -52,10 +53,11 @@ numberButtons.forEach(button => {
         nextNumber ="";
         currentOperator ="";
         equalClicked = false;
+        activeSide = "left";
         return;
     } 
     
-    if(currentOperator === ""){
+    if(activeSide === "left"){
         prevNumber += number;
         display.innerText = prevNumber;
     }else{
@@ -67,13 +69,18 @@ numberButtons.forEach(button => {
 
 operatorButtons.forEach( operatorBtn =>{
     operatorBtn.addEventListener("click", (e) =>{
-        let opButtonClicked = e.target.value;
-        if (nextNumber !== ""){
-            operate(opButtonClicked,prevNumber,nextNumber);
+        const opButtonClicked = e.target.value;
+        if (prevNumber !== "" && currentOperator !== "" && nextNumber !== ""){
+            result = operate(currentOperator,prevNumber,nextNumber);
+            prevNumber = String(result);
+            display.innerText = prevNumber;
+            nextNumber ="";
         }else if (nextNumber === "") {
             currentOperator = opButtonClicked;
+
             console.log(currentOperator);
         }
+        activeSide = "right";
         equalClicked =false;
     })
 });
@@ -88,6 +95,7 @@ equal.addEventListener("click",(e) =>{
     nextNumber ="";
     currentOperator ="";
     equalClicked =true;
+    activeSide = "left"
    } 
 });
 
@@ -97,39 +105,43 @@ allClear.addEventListener("click", (e) =>{
     currentOperator ="";
     equalClicked = false;
     display.innerText = "";
+    activeSide="left";
 });
 
 squareRoot.addEventListener("click",(e) =>{
     if(prevNumber !==""){
         result = sqRoot(prevNumber);
         prevNumber = String(result);
+        nextNumber = "";
+        currentOperator = "";
+        activeSide = "left";
+        equalClicked = true;
         display.innerText = result;
     }
 });
 clear.addEventListener("click",(e) =>{
     console.log("clicked")
-    if(currentOperator ==="" ){
+    if(activeSide === "left"){
         console.log(typeof(prevNumber));
         prevNumber = prevNumber.slice(0,-1);
         display.innerText = prevNumber;
-    }else if (currentOperator !=="") {
+    }else{
         console.log(nextNumber);
         nextNumber = nextNumber.slice(0,-1);
         display.innerText = nextNumber;
     }
 });
 
-const decimalExistPrev = prevNumber.includes(".");
-const decimalExistNext = nextNumber.includes(".");
 
 decimal.addEventListener("click",(e)=>{
-    
-    if(decimalExistPrev === false && currentOperator ===""){
+    const decimalExistPrev = prevNumber.includes(".");
+    const decimalExistNext = nextNumber.includes(".");
+    if(decimalExistPrev === false && activeSide ==="left"){
         console.log("clicked")
         prevNumber = prevNumber + ".";
         console.log(prevNumber);
         display.innerText = prevNumber;
-    }else if(decimalExistNext === false && currentOperator !==""){
+    }else if(decimalExistNext === false && activeSide ==="right"){
         nextNumber = nextNumber +".";
         display.innerText = nextNumber;
     }
