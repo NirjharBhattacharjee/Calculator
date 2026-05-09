@@ -75,6 +75,7 @@ operatorButtons.forEach( operatorBtn =>{
             prevNumber = String(result);
             display.innerText = prevNumber;
             nextNumber ="";
+            currentOperator = opButtonClicked;
         }else if (nextNumber === "") {
             currentOperator = opButtonClicked;
 
